@@ -33,12 +33,12 @@ const finalPosition = _(input)
         if (results.direction < 0) results.direction += 360; // ensure positive
 
         const vector = directions[results.direction];   // get unit vector
-        results.positions.push(_.map(vector, _ => _ * instruction.distance));   // add to position history
+        results.vectors.push(_.map(vector, _ => _ * instruction.distance));   // add to position history
 
         return results;
-    }, { direction: 0, positions: [] })
-    .get('positions')   // get 'positions' property
-    .reduce((currentPosition, position) => _.zipWith(currentPosition, position, (a, b) => a + b), [0, 0])   // add each position, accumulate position
+    }, { direction: 0, vectors: [] })
+    .get('vectors')   // get 'positions' property
+    .reduce((currentPosition, vector) => _.zipWith(currentPosition, vector, (a, b) => a + b), [0, 0])   // add each vector, accumulate position
     .value();
 
 console.log('Result:', finalPosition[0] + finalPosition[1]);
