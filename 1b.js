@@ -17,14 +17,14 @@ const directions = {
     '270': [-1, 0]
 };
 
-const finalPosition = _(input)
+const firstIntersection = _(input)
     .chain()
     .split(',')
-    .map(_ => _.trim()) // trim spaces
-    .map(_ => {
+    .map(x => x.trim()) // trim spaces
+    .map(x => {
         return {
-            turn: _[0],
-            distance: +_.substr(1)
+            turn: x[0],
+            distance: +x.substr(1)
         };
     })  // parse into individual instructions
     .reduce((results, instruction) => {
@@ -33,12 +33,29 @@ const finalPosition = _(input)
         if (results.direction < 0) results.direction += 360; // ensure positive
 
         const vector = directions[results.direction];   // get unit vector
-        results.positions.push(_.map(vector, _ => _ * instruction.distance));   // add to position history
+
+        // do this a little differently: track unit location history so we can more
+        // easily detect crossover (future path collides with past path)
+        var i;
+        for (i = 0; i < instruction.distance; i++) {
+            results.vectors.push(vector);   // add to position history
+        }
 
         return results;
-    }, { direction: 0, positions: [] })
-    .get('positions')   // get 'positions' property
-    .reduce((currentPosition, position) => _.zipWith(currentPosition, position, (a, b) => a + b), [0, 0])   // add each position, accumulate position
+    }, { direction: 0, vectors: [] })
+    .get('vectors')   // get 'vectors' property
+    .reduce((results, vector) => {
+        results.currentPosition = _.zipWith(results.currentPosition, vector, (a, b) => a + b);
+        results.positionHistory.push({
+            position: results.currentPosition,
+            visit: _.filter(results.positionHistory, x => _.isEqual(x.position, results.currentPosition)).length
+        });
+
+        return results;
+    }, { currentPosition: [0, 0], positionHistory: [{ position: [0, 0], visit: 0 }] })
+    .get('positionHistory') // get position history to check for intersections
+    .filter(x => x.visit > 0)
+    .head()
     .value();
 
-console.log('Result:', finalPosition[0] + finalPosition[1]);
+console.log('Result:', firstIntersection.position[0] + firstIntersection.position[1]);

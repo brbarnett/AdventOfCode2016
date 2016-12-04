@@ -37,7 +37,7 @@ const finalPosition = _(input)
 
         return results;
     }, { direction: 0, vectors: [] })
-    .get('vectors')   // get 'positions' property
+    .get('vectors')   // get 'vectors' property
     .reduce((currentPosition, vector) => _.zipWith(currentPosition, vector, (a, b) => a + b), [0, 0])   // add each vector, accumulate position
     .value();
 
