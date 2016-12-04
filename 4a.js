@@ -7,8 +7,8 @@ const realRoomPattern = new RegExp(/([-a-z]+?)(?:-)([0-9]+)(?:\[)(\w+)(?:\])/i);
 
 const sum = _(input.split('\n'))
     .chain()
-    .map(x => parseRoom(x)) // convert to rooms
-    .filter(x => roomIsReal(x)) // only take real rooms
+    .map(parseRoom) // convert to rooms
+    .filter(roomIsReal) // only take real rooms
     .sumBy(x => x.sectorId) // sum the Sector ID
     .value();
 
@@ -29,12 +29,10 @@ function roomIsReal(room) {
     const letters = _(room.name.replace(/-/g, '').split(''))
         .chain()
         .groupBy()  // group by letter to get counts
-        .map((arr, prop, obj) => {
-            return {
-                letter: prop,
-                count: arr.length
-            };
-        })
+        .map((arr, prop, obj) => ({
+            letter: prop,
+            count: arr.length
+        }))
         .orderBy(['count', 'letter'], ['desc', 'asc'])
         .map(x => x.letter) // get only letter property
         .take(5)    // take first 5 only

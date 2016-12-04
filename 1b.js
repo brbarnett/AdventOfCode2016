@@ -21,12 +21,10 @@ const firstIntersection = _(input)
     .chain()
     .split(',')
     .map(x => x.trim()) // trim spaces
-    .map(x => {
-        return {
-            turn: x[0],
-            distance: +x.substr(1)
-        };
-    })  // parse into individual instructions
+    .map(x => ({
+        turn: x[0],
+        distance: +x.substr(1)
+    }))  // parse into individual instructions
     .reduce((results, instruction) => {
         results.direction += turns[instruction.turn];   // change direction
         results.direction = results.direction % 360;    // check between 0-360

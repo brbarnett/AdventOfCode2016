@@ -37,12 +37,10 @@ function roomIsReal(room) {
     const letters = _(room.name.replace(/-/g, '').split(''))
         .chain()
         .groupBy()  // group by letter to get counts
-        .map((arr, prop, obj) => {
-            return {
-                letter: prop,
-                count: arr.length
-            };
-        })
+        .map((arr, prop, obj) => ({
+            letter: prop,
+            count: arr.length
+        }))
         .orderBy(['count', 'letter'], ['desc', 'asc'])
         .map(x => x.letter) // get only letter property
         .take(5)    // take first 5 only
