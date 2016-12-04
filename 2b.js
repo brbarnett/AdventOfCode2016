@@ -12,9 +12,11 @@ const directions = {
 };
 
 const keypad = [
-    [1, 2, 3],
-    [4, 5, 6],  // start at 5, so [1, 1]
-    [7, 8, 9]
+    [null, null, 1, null , null],
+    [null, 2, 3, 4, null],  
+    [5, 6, 7, 8, 9],   // start at 5, so [2, 0]
+    [null, 'A', 'B', 'C', null],
+    [null,  null, 'D', null, null]
 ];
 
 const buttons = _(input.split('\n'))    // split by return
@@ -32,15 +34,16 @@ const buttons = _(input.split('\n'))    // split by return
         results.buttons.push(keypad[results.position[0]][results.position[1]]);
 
         return results;
-    }, { position: [1, 1], buttons: [] })   // start at 5, keep track of position
+    }, { position: [2, 0], buttons: [] })   // start at 5, keep track of position
     .get('buttons') // get pressed buttons
     .value();
 
 console.log('Result:', buttons);
 
 function positionIsLegal(position) {
-    if(position[0] < 0 || position[0] > 2) return false;
-    if(position[1] < 0 || position[1] > 2) return false;
+    if(position[0] < 0 || position[0] > 4) return false;
+    if(position[1] < 0 || position[1] > 4) return false;
+    if(keypad[position[0]][position[1]] === null) return false;
 
     return true;
 }
