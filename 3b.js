@@ -5,17 +5,15 @@ const input = fileService.getFileContents('./input3.dat');
 
 const possibleTriangles = _(input.split('\n'))
     .chain()
-    .map(x => {
-        return _(x.split(' '))
-            .chain()
-            .compact()  // remove empty and null values
-            .map(y => +y)   // convert to number
-            .value();
-    })  // parse all triangles side length values
+    .map(x => _(x.split(' '))
+        .chain()
+        .compact()  // remove empty and null values
+        .map(y => +y)   // convert to number
+        .value())  // parse all triangles side length values
     .reduce((results, line, number) => {
         results.matrix.push(line);
-        
-        if(results.matrix.length >= 3) {
+
+        if (results.matrix.length >= 3) {
             const transposedMatrix = _(results.matrix)
                 .chain()
                 .unzip() // transpose

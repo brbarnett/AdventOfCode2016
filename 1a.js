@@ -21,12 +21,10 @@ const finalPosition = _(input)
     .chain()
     .split(',')
     .map(_ => _.trim()) // trim spaces
-    .map(_ => {
-        return {
-            turn: _[0],
-            distance: +_.substr(1)
-        };
-    })  // parse into individual instructions
+    .map(_ => ({
+        turn: _[0],
+        distance: +_.substr(1)
+    }))  // parse into individual instructions
     .reduce((results, instruction) => {
         results.direction += turns[instruction.turn];   // change direction
         results.direction = results.direction % 360;    // check between 0-360
