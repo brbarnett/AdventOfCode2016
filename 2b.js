@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const fileService = require('./core/fileService');
 
-const input = fileService.getFileContents('./input2.dat');
+const input = fileService.getFileContents('./2.dat');
 
 // define unit vectors
 const directions = {

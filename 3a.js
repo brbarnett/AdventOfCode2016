@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const fileService = require('./core/fileService');
 
-const input = fileService.getFileContents('./input3.dat');
+const input = fileService.getFileContents('./3.dat');
 
 const possibleTriangles = _(input.split('\n'))
     .chain()

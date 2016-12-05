@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const fileService = require('./core/fileService');
 
-const input = fileService.getFileContents('./input1.dat');
+const input = fileService.getFileContents('./1.dat');
 
 // define mapping from instructions to turns
 const turns = {

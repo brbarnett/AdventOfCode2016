@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const fileService = require('./core/fileService');
 
-const input = fileService.getFileContents('./input4.dat');
+const input = fileService.getFileContents('./4.dat');
 
 const realRoomPattern = new RegExp(/([-a-z]+?)(?:-)([0-9]+)(?:\[)(\w+)(?:\])/i);
 
